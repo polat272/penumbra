@@ -2971,6 +2971,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "penumbra-eddy"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "ark-ff",
+ "ark-std",
+ "async-trait",
+ "decaf377",
+ "futures",
+ "merlin",
+ "parking_lot 0.12.1",
+ "rand_core",
+]
+
+[[package]]
 name = "penumbra-proto"
 version = "0.1.0"
 dependencies = [
