@@ -30,6 +30,26 @@ jobs:
         run: |
           cargo install mdbook mdbook-katex mdbook-mermaid
 
+      - name: Install Golang toolchain
+        uses: actions/setup-go@v3
+        with:
+          go-version: '^1.18.3'
+      - name: Install protoc-gen-doc
+        run: |
+          go get -u github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc
+
+      - name: Build proto docs
+        run: |
+          protoc --doc_out=./protodoc --doc_opt=html,index.html proto/proto/**/*.proto
+      - name: Deploy proto docs to firebase
+        uses: w9jds/firebase-action@v2.0.0
+        with:
+          args: deploy
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          PROJECT_ID: penumbra-protobufdocs
+          PROJECT_PATH: protodocs
+
       - name: Build API docs
         run: |
           # Explicitly specify which crates should be included.
